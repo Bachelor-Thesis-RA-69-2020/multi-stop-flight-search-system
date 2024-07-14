@@ -34,6 +34,8 @@ def find_flights_with_stops(flights, date, from_iata, to_iata):
                 continue
             if prev_arrival != datetime.min and (departure_time - prev_arrival < timedelta(minutes=30) or departure_time - prev_arrival > timedelta(hours=4)):
                 continue
+            if any(f['fromAirportIata'] == current_airport for f in path):
+                continue
             new_path = path + [flight]
             new_price = total_price + flight['price']
             new_duration = total_duration + flight['duration']
